@@ -10,30 +10,18 @@ if (typeof require !== 'undefined') {
   require.extensions['.less'] = (file) => {}
 }
 
-module.exports = withImages(
-  withCSS({
-    cssModules: true,
-    cssLoaderOptions: {
-      importLoaders: 1,
-      localIdentName: '[local]___[hash:base64:5]',
-    },
-    ...withLess(
-      withSass({
-        lessLoaderOptions: {
-          javascriptEnabled: true,
-        },
-        // webpack(config) {
-        //   config.module.rules.push({
-        //     test: /\.svg$/,
-        //     issuer: {
-        //       test: /\.(js|ts)x?$/,
-        //     },
-        //     use: ['@svgr/webpack'],
-        //   })
-
-        //   return config
-        // },
-      })
-    ),
-  })
-)
+module.exports = withImages()
+module.exports = withCSS({
+  cssModules: true,
+  cssLoaderOptions: {
+    importLoaders: 1,
+    localIdentName: '[local]___[hash:base64:5]',
+  },
+  ...withLess(
+    withSass({
+      lessLoaderOptions: {
+        javascriptEnabled: true,
+      },
+    })
+  ),
+})

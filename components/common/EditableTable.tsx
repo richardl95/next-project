@@ -1,5 +1,5 @@
 import { Button, Form, Input, InputNumber, Popconfirm } from 'antd'
-import { EditSVG } from 'assets/images'
+import EditSVG from 'assets/images/edit.svg'
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -81,12 +81,12 @@ const EditableTable = <T extends any>({
     try {
       const row = (await form.validateFields()) as Item
 
-      const newData = [...data]
+      const newData: any = [...data]
       const index = newData.findIndex((item) => key === item[rowKey])
       console.log({ index })
 
       if (index > -1) {
-        const item = newData[index]
+        const item: any = newData[index]
         newData.splice(index, 1, {
           ...item,
           ...row,
@@ -189,7 +189,7 @@ const EditableTable = <T extends any>({
   })
 
   const handleAdd = () => {
-    const newData = [...data]
+    const newData: any = [...data]
     newData.unshift({ id: uuidv4() })
     console.log({ newData, data })
     setEditingKey(newData[0].id)
