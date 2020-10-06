@@ -1,213 +1,144 @@
+import { Button } from 'antd'
+import { DeleteIcon, EditIcon, Icon, LoginIcon } from 'assets/images'
+// import Tes1t from 'assets/images/edit.svg'
+import Header from 'components/Header'
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
+import React from 'react'
+import { QueryCache, useQuery } from 'react-query'
+import { dehydrate } from 'react-query/hydration'
 
-export const Home = (): JSX.Element => (
-  <div className="container">
-    <Head>
-      <title>Create Next App</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+export const Home = (props): JSX.Element => {
+  const { data } = useQuery('posts', getPosts)
 
-    <main>
-      <h1 className="title">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
+  const { isLoading, error, data: data1 } = useQuery('repoData', () =>
+    fetch(
+      'https://api.github.com/repos/tannerlinsley/react-query'
+    ).then((res) => res.json())
+  )
+  console.log(data.archive_url)
 
-      <p className="description">
-        Get started by editing <code>pages/index.tsx</code>
-      </p>
-
-      <button
-        onClick={() => {
-          window.alert('With typescript and Jest')
-        }}
-      >
-        Test Button
-      </button>
-
-      <div className="grid">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Learn &rarr;</h3>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
-
-        <a
-          href="https://github.com/vercel/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="card"
-        >
-          <h3>Deploy &rarr;</h3>
-          <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-        </a>
+  return (
+    <div className="container">
+      {data.hooks_url}
+      <div className="h-8 w-8">
+        <Icon
+          src={LoginIcon}
+          style={{ width: 200 }}
+          className="h-2 w-2 text-red-500"
+        />
       </div>
-    </main>
+      <p className="text-red-500">asdsddasd</p>
+      <svg
+        className="h-2 w-2"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+        />
+      </svg>
+      <EditIcon />
 
-    <footer>
-      <a
-        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-      </a>
-    </footer>
+      {/* <Icon component={DeleteIcon} /> */}
+      {/* <DeleteIcon className="h-8 w-8" /> */}
+      {isLoading ? 'laoding' : data1?.hooks_url}
+      <Head>
+        <title>Create Next App</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Header />
+      <Button>asd</Button>
+      {/* <img src={require('assets/images/login.svg')} alt="asd" /> */}
+      {/* <Tes1t /> */}
+      <main>
+        <h1 className="title">
+          Welcome to <a href="https://nextjs.org">Next.js!</a>
+        </h1>
 
-    <style jsx>{`
-      .container {
-        min-height: 100vh;
-        padding: 0 0.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
+        <p className="description">
+          Get started by editing <code>pages/index.tsx</code>
+        </p>
 
-      main {
-        padding: 5rem 0;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
+        <button
+          onClick={() => {
+            window.alert('With typescript and Jest')
+          }}>
+          Test Button
+        </button>
 
-      footer {
-        width: 100%;
-        height: 100px;
-        border-top: 1px solid #eaeaea;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+        <div className="grid">
+          <a href="https://nextjs.org/docs" className="card">
+            <h3>Documentation &rarr;</h3>
+            <p>
+              Find in-depth information about Next.js features and
+              API.
+            </p>
+          </a>
 
-      footer img {
-        margin-left: 0.5rem;
-      }
+          <a href="https://nextjs.org/learn" className="card">
+            <h3>Learn &rarr;</h3>
+            <p>
+              Learn about Next.js in an interactive course with
+              quizzes!
+            </p>
+          </a>
 
-      footer a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+          <a
+            href="https://github.com/vercel/next.js/tree/master/examples"
+            className="card">
+            <h3>Examples &rarr;</h3>
+            <p>
+              Discover and deploy boilerplate example Next.js
+              projects.
+            </p>
+          </a>
 
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
+          <a
+            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            className="card">
+            <h3>Deploy &rarr;</h3>
+            <p>
+              Instantly deploy your Next.js site to a public URL with
+              Vercel.
+            </p>
+          </a>
+        </div>
+      </main>
 
-      .title a {
-        color: #0070f3;
-        text-decoration: none;
-      }
+      <footer>
+        <a
+          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer">
+          Powered by{' '}
+          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
+        </a>
+      </footer>
+    </div>
+  )
+}
+const getPosts = () =>
+  fetch(
+    'https://api.github.com/repos/tannerlinsley/react-query'
+  ).then((res) => res.json())
+export const getServerSideProps: GetServerSideProps = async (
+  context
+) => {
+  const queryCache = new QueryCache()
+  console.log('asdxzccx')
 
-      .title a:hover,
-      .title a:focus,
-      .title a:active {
-        text-decoration: underline;
-      }
+  await queryCache.prefetchQuery('posts', getPosts)
 
-      .title {
-        margin: 0;
-        line-height: 1.15;
-        font-size: 4rem;
-      }
-
-      .title,
-      .description {
-        text-align: center;
-      }
-
-      .description {
-        line-height: 1.5;
-        font-size: 1.5rem;
-      }
-
-      code {
-        background: #fafafa;
-        border-radius: 5px;
-        padding: 0.75rem;
-        font-size: 1.1rem;
-        font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-      }
-
-      .grid {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-
-        max-width: 800px;
-        margin-top: 3rem;
-      }
-
-      .card {
-        margin: 1rem;
-        flex-basis: 45%;
-        padding: 1.5rem;
-        text-align: left;
-        color: inherit;
-        text-decoration: none;
-        border: 1px solid #eaeaea;
-        border-radius: 10px;
-        transition: color 0.15s ease, border-color 0.15s ease;
-      }
-
-      .card:hover,
-      .card:focus,
-      .card:active {
-        color: #0070f3;
-        border-color: #0070f3;
-      }
-
-      .card h3 {
-        margin: 0 0 1rem 0;
-        font-size: 1.5rem;
-      }
-
-      .card p {
-        margin: 0;
-        font-size: 1.25rem;
-        line-height: 1.5;
-      }
-
-      .logo {
-        height: 1em;
-      }
-
-      @media (max-width: 600px) {
-        .grid {
-          width: 100%;
-          flex-direction: column;
-        }
-      }
-    `}</style>
-
-    <style jsx global>{`
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-    `}</style>
-  </div>
-)
+  return {
+    props: {
+      dehydratedState: dehydrate(queryCache),
+    },
+  }
+}
 
 export default Home
